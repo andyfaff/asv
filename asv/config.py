@@ -25,6 +25,7 @@ class Config(object):
         self.branches = [None]
         self.pythons = ["{0[0]}.{0[1]}".format(sys.version_info)]
         self.matrix = {}
+        self.optional_dependencies = {}
         self.exclude = []
         self.include = []
         self.env_dir = "env"

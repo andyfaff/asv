@@ -341,7 +341,8 @@ class Environment(object):
 
         expected_info = {
             'python': self._python,
-            'requirements': self._requirements
+            'requirements': self._requirements,
+            'optional_dependencies': self._optional_dependencies
         }
 
         if info != expected_info:
@@ -500,7 +501,8 @@ class Environment(object):
         path = os.path.join(path, 'asv-env-info.json')
         content = {
             'python': self._python,
-            'requirements': self._requirements
+            'requirements': self._requirements,
+            'optional_dependencies': self._optional_dependencies
         }
         util.write_json(path, content)
 

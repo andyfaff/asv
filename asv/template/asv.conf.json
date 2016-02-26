@@ -2,17 +2,13 @@
     // The version of the config file format.  Do not change, unless
     // you know what you are doing.
     "version": 1,
-
     // The name of the project being benchmarked
     "project": "project",
-
     // The project's homepage
     "project_url": "http://project-homepage.org/",
-
     // The URL or local path of the source code repository for the
     // project being benchmarked
     "repo": "",
-
     // List of branches to benchmark. If not provided, defaults to "master"
     // (for git) or "tip" (for mercurial).
     // "branches": ["master"], // for git
@@ -30,7 +26,6 @@
     // determined by looking for tools on the PATH environment
     // variable.
     "environment_type": "virtualenv",
-
     // the base URL to show a commit for the project.
     // "show_commit_url": "http://github.com/owner/project/commit/",
 
@@ -42,11 +37,19 @@
     // package (in PyPI) and the values are version numbers.  An empty
     // list or empty string indicates to just test against the default
     // (latest) version. null indicates that the package is to not be
-    // installed.
+    // installed. These packages are installed via pip if the environment_type
+    // is virtualenv, and via conda if the environment_type is conda.
     //
     // "matrix": {
     //     "numpy": ["1.6", "1.7"],
     //     "six": ["", null],        // test with and without six installed
+    // },
+
+    // Optional dependencies that are only installable via pip, in the
+    // circumstance that the environment_type is conda, and if the projects
+    // setup.py does not install them by default.
+    // "optional_dependencies": {
+    //     "emcee": "",
     // },
 
     // Combinations of libraries/python versions can be excluded/included

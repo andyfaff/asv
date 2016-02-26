@@ -48,6 +48,7 @@ class Virtualenv(environment.Environment):
         self._executable = executable
         self._python = python
         self._requirements = requirements
+        self._optional_dependencies = conf.optional_dependencies
         super(Virtualenv, self).__init__(conf, python, requirements)
 
         try:
@@ -117,6 +118,15 @@ class Virtualenv(environment.Environment):
         if self._requirements:
             args = ['install', '-v', '--upgrade']
             for key, val in six.iteritems(self._requirements):
+                if val:
+                    args.append("{0}=={1}".format(key, val))
+                else:
+                    args.append(key)
+            self.run_executable('pip', args)
+
+        if len(self._optional_dependencies):
+            args = ['install', '-v', '--upgrade']
+            for key, val in six.iteritems(self._optional_dependencies):
                 if val:
                     args.append("{0}=={1}".format(key, val))
                 else:

@@ -42,6 +42,8 @@ class Conda(environment.Environment):
         """
         self._python = python
         self._requirements = requirements
+        self._conf = conf
+        self._optional_dependencies = conf.optional_dependencies
         super(Conda, self).__init__(conf, python, requirements)
 
     @classmethod
@@ -92,7 +94,6 @@ class Conda(environment.Environment):
 
     def _install_requirements(self, conda):
         self.install('wheel')
-
         if self._requirements:
             # Install all the dependencies with a single conda command.
             # This ensures we get the versions requested, or an error
@@ -105,6 +106,16 @@ class Conda(environment.Environment):
                     args.append(key)
 
             util.check_output([conda] + args)
+
+        if len(self._optional_dependencies):
+            args = ['install', '-v', '--upgrade']
+            for key, val in six.iteritems(self._optional_dependencies):
+                if val:
+                    args.append("{0}=={1}".format(key, val))
+                else:
+                    args.append(key)
+            self.run_executable('pip', args)
+
 
     def install(self, package):
         log.info("Installing into {0}".format(self.name))
